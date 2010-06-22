@@ -45,12 +45,12 @@ function createListener (root) {
 }
 
 function createFileServer(root) {
-  var listener = createListener(path.normalize(path.join(process.cwd(), root)));
+  var listener = createListener(root);
   return http.createServer(listener);
 }
 
 if (require.main === module) {
-  createFileServer(process.argv[process.argv.length - 1]).listen(8000, 'localhost');
+  createFileServer(__dirname).listen(8000, 'localhost');
   sys.puts('listening on 8000');
 }
 
