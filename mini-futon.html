@@ -1,0 +1,54 @@
+<html>
+	<head>
+		<title>
+			Mini Futon (Proof of concept)
+		</title>
+		
+		<script type="text/javascript" src="couch.js" ></script>
+		<script type="text/javascript" src="ext/jquery.js" ></script>
+
+		<script>
+var miniFuton = function(databases, elem){
+	var  comp = databases.length
+		,databases = {};
+
+	var cb = function(){
+		var ul = $("<ul></ul>");
+		for (var db in databases){
+			ul.append("<li>" + db + "</li>");
+		}	
+		elem.append(ul);
+	
+	}
+
+	for (var i in databases){
+		createCouch({
+			name : i,
+			success : function(couch){
+				databases[i] = couch;
+				comp -=1;
+				if (comp === 0){
+					cb();
+				}	
+			}
+		});
+	}
+
+}
+
+
+
+$(function(){
+	$('body').append("hello world");
+
+	miniFuton(['test1', 'test2'], $('body'));
+});
+			
+		</script>	
+	
+	
+	</head>	
+	<body>
+	
+	</body>
+</html>	
